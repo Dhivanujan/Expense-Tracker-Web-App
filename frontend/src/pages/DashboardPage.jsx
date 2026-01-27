@@ -23,17 +23,48 @@ const DashboardPage = () => {
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [error, setError] = useState(null);
 
+  // New state for filtering and pagination
+  const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('All');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
+
   const monthLabel = useMemo(() => month, [month]);
+
+  // Debounce search input
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1); // Reset to page 1 on search change
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  // Reset page when category or month changes
+  useEffect(() => {
+    setPage(1);
+  }, [categoryFilter, month]);
 
   const fetchData = async () => {
     setLoading(true);
     setError(null);
     try {
+      const expensesParams = {
+        month,
+        page,
+        limit: 5, // Smaller limit to demonstrate pagination
+        search: debouncedSearch,
+        category: categoryFilter,
+      };
+
       const [expensesRes, summaryRes] = await Promise.all([
-        api.get('/expenses', { params: { month } }),
+        api.get('/expenses', { params: expensesParams }),
         api.get('/expenses/summary', { params: { month } }),
       ]);
-      setExpenses(expensesRes.data);
+
+      setExpenses(expensesRes.data.expenses);
+      setTotalPages(expensesRes.data.pages);
       setSummary(summaryRes.data);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load data');
@@ -44,7 +75,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [month]);
+  }, [month, page, debouncedSearch, categoryFilter]);
 
   const handleCreateOrUpdate = async (payload) => {
     setFormLoading(true);
@@ -158,25 +189,71 @@ const DashboardPage = () => {
       </div>
 
       <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-6 backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold flex items-center gap-2">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/10 text-purple-500 text-xs">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-            </span>
-            Recent Transactions
-          </h2>
-          {loading && (
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-semibold flex items-center gap-2">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/10 text-purple-500 text-xs">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+              </span>
+              Transactions
+            </h2>
+            {loading && (
              <div className="flex items-center gap-2 text-xs text-slate-400">
                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-               Syncing...
+               Docs...
              </div>
-          )}
+            )}
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-3">
+             <input
+              type="text"
+              placeholder="Search expenses..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="px-3 py-2 rounded-lg bg-slate-950/50 border border-slate-700/60 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all hover:bg-slate-900"
+            />
+            <select
+               value={categoryFilter}
+               onChange={(e) => setCategoryFilter(e.target.value)}
+               className="px-3 py-2 rounded-lg bg-slate-950/50 border border-slate-700/60 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all hover:bg-slate-900"
+            >
+              <option value="All">All Categories</option>
+              {['Food', 'Transport', 'Shopping', 'Bills', 'Health', 'Entertainment', 'Other'].map(c => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
         </div>
+        
         <ExpenseList
           expenses={expenses}
           onEdit={(exp) => setSelectedExpense(exp)}
           onDelete={handleDelete}
         />
+
+        {/* Pagination Controls */}
+        <div className="mt-4 flex items-center justify-between text-sm text-slate-400">
+          <div>
+            Page {page} of {totalPages || 1}
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Previous
+            </button>
+            <button
+              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+              disabled={page >= totalPages}
+               className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </div>
     </Layout>
   );

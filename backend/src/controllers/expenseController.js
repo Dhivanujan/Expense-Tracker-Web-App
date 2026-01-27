@@ -27,11 +27,12 @@ export const createExpense = async (req, res) => {
 };
 
 export const getExpenses = async (req, res) => {
-  const { month } = req.query; // expected format: YYYY-MM
+  const { month, page = 1, limit = 10, search, category } = req.query;
 
   try {
     const query = { user: req.user._id };
 
+    // Filter by month
     if (month) {
       const [year, monthNumber] = month.split('-');
       const startDate = new Date(year, monthNumber - 1, 1);
@@ -39,8 +40,37 @@ export const getExpenses = async (req, res) => {
       query.date = { $gte: startDate, $lte: endDate };
     }
 
-    const expenses = await Expense.find(query).sort({ date: -1 });
-    return res.json(expenses);
+    // Search by keyword (title or description)
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    // Filter by category
+    if (category && category !== 'All') {
+      query.category = category;
+    }
+
+    // Pagination
+    const pageNum = Number(page);
+    const limitNum = Number(limit);
+    const skip = (pageNum - 1) * limitNum;
+
+    const expenses = await Expense.find(query)
+      .sort({ date: -1 })
+      .skip(skip)
+      .limit(limitNum);
+
+    const total = await Expense.countDocuments(query);
+
+    return res.json({
+      expenses,
+      page: pageNum,
+      pages: Math.ceil(total / limitNum),
+      total,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Server error' });
