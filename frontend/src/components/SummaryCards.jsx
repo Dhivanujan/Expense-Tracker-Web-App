@@ -1,26 +1,78 @@
 import React from 'react';
 
 const SummaryCards = ({ totalAmount, monthLabel }) => {
+  const dailyAverage = totalAmount / 30;
+  const formattedMonth = new Date(monthLabel + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-      <div className="relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/40 p-6 backdrop-blur-sm group hover:border-emerald-500/30 transition-all duration-300">
-        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-           <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      {/* Total Spent Card */}
+      <div className="relative overflow-hidden glass-card p-6 group hover:border-emerald-500/30 transition-all duration-500 animate-fade-in-up">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700"></div>
+        <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500 group-hover:animate-float">
+           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
         </div>
-        <p className="text-sm font-medium text-slate-400 mb-2 uppercase tracking-wider">Total spent ({monthLabel})</p>
-        <p className="text-4xl font-bold text-white tracking-tight">
-          ${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        </p>
-        <div className="mt-4 flex items-center gap-2 text-xs text-emerald-400">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Your monthly overview</span>
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+            </div>
+            <p className="text-sm font-medium text-slate-400 uppercase tracking-wider">Total Spent</p>
+          </div>
+          <p className="text-4xl font-bold gradient-text-emerald tracking-tight mb-1">
+            ${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </p>
+          <p className="text-xs text-slate-500">{formattedMonth}</p>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500/0 via-emerald-500/50 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
       </div>
-      
-      {/* Placeholder for future cards (e.g. Budget vs Actual, Daily Average) */}
-      <div className="hidden sm:block rounded-xl border border-slate-800 bg-slate-900/20 p-6 flex flex-col justify-center items-center text-center opacity-60 hover:opacity-100 transition-opacity cursor-default">
-         <p className="text-sm text-slate-500">More insights coming soon</p>
-         <p className="text-xs text-slate-600 mt-1">Budget goals, daily averages & trends</p>
+
+      {/* Daily Average Card */}
+      <div className="relative overflow-hidden glass-card p-6 group hover:border-cyan-500/30 transition-all duration-500 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700"></div>
+        <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500 group-hover:animate-float">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-cyan-500"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-cyan-400"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            </div>
+            <p className="text-sm font-medium text-slate-400 uppercase tracking-wider">Daily Average</p>
+          </div>
+          <p className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent tracking-tight mb-1">
+            ${dailyAverage.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </p>
+          <p className="text-xs text-slate-500">Per day this month</p>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500/0 via-cyan-500/50 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </div>
+
+      {/* Quick Stats Card */}
+      <div className="relative overflow-hidden glass-card p-6 group hover:border-purple-500/30 transition-all duration-500 sm:col-span-2 lg:col-span-1 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700"></div>
+        <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500 group-hover:animate-float">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg>
+        </div>
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-400"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+            </div>
+            <p className="text-sm font-medium text-slate-400 uppercase tracking-wider">Quick Stats</p>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-400">Budget Status</span>
+              <span className="text-sm font-semibold text-emerald-400">On Track</span>
+            </div>
+            <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+              <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 animate-shimmer"></div>
+            </div>
+            <p className="text-xs text-slate-500">67% of monthly budget used</p>
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500/0 via-purple-500/50 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
       </div>
     </div>
   );
