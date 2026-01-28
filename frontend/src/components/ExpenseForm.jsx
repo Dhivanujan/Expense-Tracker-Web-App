@@ -61,12 +61,12 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
             Amount
           </label>
           <div className="relative group">
-            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-500 transition-colors">$</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-500 transition-colors">$</span>
             <input
               type="number"
               min="0"
               step="0.01"
-              className="input-field pl-8"
+              className="input-field pl-9"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
