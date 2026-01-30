@@ -28,14 +28,14 @@ const ExpenseList = ({ expenses, onEdit, onDelete }) => {
       {/* Desktop Table View */}
       <div className="hidden md:block glass-card overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-sm table-fixed">
             <thead>
-              <tr className="text-left border-b border-slate-800/80 bg-slate-900/60">
-                <th className="px-5 py-4 font-semibold text-slate-400 uppercase tracking-wider text-xs">Date</th>
+              <tr className="text-left border-b border-slate-800/80 bg-slate-900/80">
+                <th className="px-5 py-4 font-semibold text-slate-400 uppercase tracking-wider text-xs w-24">Date</th>
                 <th className="px-5 py-4 font-semibold text-slate-400 uppercase tracking-wider text-xs">Details</th>
-                <th className="px-5 py-4 font-semibold text-slate-400 uppercase tracking-wider text-xs">Category</th>
-                <th className="px-5 py-4 text-right font-semibold text-slate-400 uppercase tracking-wider text-xs">Amount</th>
-                <th className="px-5 py-4 text-right font-semibold text-slate-400 uppercase tracking-wider text-xs">Actions</th>
+                <th className="px-5 py-4 font-semibold text-slate-400 uppercase tracking-wider text-xs w-32">Category</th>
+                <th className="px-5 py-4 text-right font-semibold text-slate-400 uppercase tracking-wider text-xs w-28">Amount</th>
+                <th className="px-5 py-4 text-right font-semibold text-slate-400 uppercase tracking-wider text-xs w-24">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/50">
@@ -111,10 +111,10 @@ const ExpenseList = ({ expenses, onEdit, onDelete }) => {
           return (
             <div 
               key={exp._id} 
-              className="glass-card p-4 animate-fade-in-up"
+              className="glass-card p-4 animate-fade-in-up hover:border-slate-700/60 transition-all"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center text-xl`}>
                     {colors.icon}
@@ -129,13 +129,13 @@ const ExpenseList = ({ expenses, onEdit, onDelete }) => {
                     </div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="font-bold text-emerald-400 text-lg">${exp.amount.toFixed(2)}</div>
-                  <div className="flex items-center gap-1 mt-1">
-                    <button onClick={() => onEdit(exp)} className="p-1.5 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10">
+                <div className="text-right flex-shrink-0">
+                  <div className="font-bold text-emerald-400 text-lg font-mono">${exp.amount.toFixed(2)}</div>
+                  <div className="flex items-center justify-end gap-1 mt-2">
+                    <button onClick={() => onEdit(exp)} className="p-2 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-all" aria-label="Edit expense">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                     </button>
-                    <button onClick={() => onDelete(exp._id)} className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10">
+                    <button onClick={() => onDelete(exp._id)} className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all" aria-label="Delete expense">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                     </button>
                   </div>

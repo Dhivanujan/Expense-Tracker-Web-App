@@ -35,23 +35,21 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 py-8">
       {/* Background decorations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
       </div>
       
-      <div className="w-full max-w-md relative animate-fade-in-up">
+      <div className="w-full max-w-md relative z-10 animate-fade-in-up">
         {/* Logo */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 flex items-center justify-center shadow-lg shadow-emerald-500/10">
-            <span className="text-emerald-400 font-bold text-2xl">E</span>
+        <div className="flex flex-col items-center justify-center mb-8">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 flex items-center justify-center shadow-lg shadow-emerald-500/10 mb-4">
+            <span className="text-emerald-400 font-bold text-3xl">E</span>
           </div>
-          <div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">ExpenseTracker</h1>
-            <p className="text-xs text-slate-500">Smart Finance Management</p>
-          </div>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent text-center">ExpenseTracker</h1>
+          <p className="text-xs text-slate-500 mt-1">Smart Finance Management</p>
         </div>
 
         {/* Card */}
@@ -122,7 +120,7 @@ const LoginPage = () => {
           <div className="mt-8 pt-6 border-t border-slate-800/60 text-center">
             <p className="text-sm text-slate-400">
               Don&apos;t have an account?{' '}
-              <Link to="/register" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
+              <Link to="/register" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors hover:underline underline-offset-2">
                 Create one free
               </Link>
             </p>
@@ -130,7 +128,7 @@ const LoginPage = () => {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-xs text-slate-600 mt-8">
+        <p className="text-center text-xs text-slate-500 mt-6">
           © 2026 ExpenseTracker. All rights reserved.
         </p>
       </div>

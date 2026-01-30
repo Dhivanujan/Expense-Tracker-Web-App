@@ -97,17 +97,17 @@ const CategoryChart = ({ data }) => {
       </div>
       
       {/* Custom Legend */}
-      <div className="mt-4 grid grid-cols-2 gap-2">
+      <div className="mt-5 pt-4 border-t border-slate-800/50 grid grid-cols-2 gap-x-4 gap-y-2">
         {data.map((item, index) => {
           const percentage = ((item.totalAmount / total) * 100).toFixed(0);
           return (
-            <div key={item.category} className="flex items-center gap-2 text-xs group cursor-default">
+            <div key={item.category} className="flex items-center gap-2 text-xs group cursor-default py-1">
               <div 
-                className="w-3 h-3 rounded-full flex-shrink-0 transition-transform group-hover:scale-125" 
+                className="w-2.5 h-2.5 rounded-full flex-shrink-0 transition-transform group-hover:scale-125" 
                 style={{ backgroundColor: colors[index] }}
               ></div>
-              <span className="text-slate-400 truncate group-hover:text-slate-300 transition-colors">{item.category}</span>
-              <span className="text-slate-500 ml-auto">{percentage}%</span>
+              <span className="text-slate-400 truncate group-hover:text-slate-300 transition-colors flex-1">{item.category}</span>
+              <span className="text-slate-500 font-medium tabular-nums">{percentage}%</span>
             </div>
           );
         })}
