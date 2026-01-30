@@ -1,13 +1,21 @@
 import React from 'react';
 
 const SummaryCards = ({ totalAmount, monthLabel }) => {
-  const dailyAverage = totalAmount / 30;
-  const formattedMonth = new Date(monthLabel + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const [year, month] = (monthLabel || '').split('-').map(Number);
+  const daysInMonth = !isNaN(year) && !isNaN(month)
+    ? new Date(year, month, 0).getDate()
+    : 30;
+
+  const dailyAverage = daysInMonth > 0 ? totalAmount / daysInMonth : 0;
+  const formattedMonth = new Date((monthLabel || '') + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
       {/* Total Spent Card */}
-      <div className="relative overflow-hidden glass-card p-6 group hover:border-emerald-500/30 transition-all duration-500 animate-fade-in-up">
+      <div
+        className="relative overflow-hidden glass-card p-6 group hover:border-emerald-500/40 transition-all duration-500 animate-fade-in-up hover:-translate-y-1 hover:shadow-emerald-500/20 hover:shadow-xl"
+        aria-label="Total spent this month"
+      >
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700"></div>
         <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500 group-hover:animate-float">
            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
@@ -28,7 +36,11 @@ const SummaryCards = ({ totalAmount, monthLabel }) => {
       </div>
 
       {/* Daily Average Card */}
-      <div className="relative overflow-hidden glass-card p-6 group hover:border-cyan-500/30 transition-all duration-500 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+      <div
+        className="relative overflow-hidden glass-card p-6 group hover:border-cyan-500/40 transition-all duration-500 animate-fade-in-up hover:-translate-y-1 hover:shadow-cyan-500/20 hover:shadow-xl"
+        style={{ animationDelay: '0.1s' }}
+        aria-label="Average spent per day this month"
+      >
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700"></div>
         <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500 group-hover:animate-float">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-cyan-500"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -49,7 +61,11 @@ const SummaryCards = ({ totalAmount, monthLabel }) => {
       </div>
 
       {/* Quick Stats Card */}
-      <div className="relative overflow-hidden glass-card p-6 group hover:border-purple-500/30 transition-all duration-500 sm:col-span-2 lg:col-span-1 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+      <div
+        className="relative overflow-hidden glass-card p-6 group hover:border-purple-500/40 transition-all duration-500 sm:col-span-2 lg:col-span-1 animate-fade-in-up hover:-translate-y-1 hover:shadow-purple-500/20 hover:shadow-xl"
+        style={{ animationDelay: '0.2s' }}
+        aria-label="Quick budget status overview"
+      >
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700"></div>
         <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500 group-hover:animate-float">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg>
