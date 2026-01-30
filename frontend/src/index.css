@@ -126,6 +126,10 @@ body {
   @apply w-full rounded-xl bg-slate-950/50 border border-slate-700/60 px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all hover:bg-slate-900/80 hover:border-slate-600;
 }
 
+.input-field-icon {
+  @apply w-full rounded-xl bg-slate-950/50 border border-slate-700/60 pl-11 pr-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all hover:bg-slate-900/80 hover:border-slate-600;
+}
+
 /* Gradient text */
 .gradient-text {
   @apply bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent;
