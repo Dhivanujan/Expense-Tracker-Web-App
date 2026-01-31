@@ -45,7 +45,9 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
         <div className="space-y-2">
           <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <div className="w-5 h-5 rounded-md bg-emerald-500/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            </div>
             Title
           </label>
           <input
@@ -57,16 +59,18 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
         </div>
         <div className="space-y-2">
           <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <div className="w-5 h-5 rounded-md bg-emerald-500/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
             Amount
           </label>
           <div className="relative group">
-            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-500 transition-colors pointer-events-none">$</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none font-medium">$</span>
             <input
               type="number"
               min="0"
               step="0.01"
-              className="input-field pl-8"
+              className="input-field pl-9"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
@@ -75,11 +79,13 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
         </div>
         <div className="space-y-2">
           <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+            <div className="w-5 h-5 rounded-md bg-emerald-500/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+            </div>
             Category
           </label>
           <select
-            className="input-field appearance-none cursor-pointer"
+            className="input-field appearance-none cursor-pointer font-medium"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -94,20 +100,24 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
         <div className="space-y-2">
           <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <div className="w-5 h-5 rounded-md bg-emerald-500/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
             Date
           </label>
           <input
             type="date"
-            className="input-field [color-scheme:dark]"
+            className="input-field [color-scheme:dark] font-medium"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
         <div className="md:col-span-2 space-y-2">
           <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
-            Description <span className="text-slate-500 font-normal normal-case">(optional)</span>
+            <div className="w-5 h-5 rounded-md bg-emerald-500/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+            </div>
+            Description <span className="text-slate-600 font-normal normal-case">(optional)</span>
           </label>
           <input
             className="input-field"
@@ -121,7 +131,7 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
         <button
           type="submit"
           disabled={loading}
-          className="btn-primary flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed min-w-[140px]"
+          className="btn-primary flex items-center justify-center gap-2.5 disabled:opacity-60 disabled:cursor-not-allowed min-w-[160px] py-3"
         >
           {loading ? (
             <>
@@ -140,7 +150,7 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
                 </>
               ) : (
                 <>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                   Add Expense
                 </>
               )}
@@ -148,7 +158,10 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
           )}
         </button>
         {initialData && (
-          <span className="text-xs text-slate-500">Editing expense</span>
+          <span className="text-xs text-slate-500 flex items-center gap-2 bg-slate-800/50 px-3 py-1.5 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-500"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            Editing expense
+          </span>
         )}
       </div>
     </form>
