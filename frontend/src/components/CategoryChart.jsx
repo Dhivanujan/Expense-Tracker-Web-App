@@ -118,7 +118,7 @@ const CategoryChart = ({ data }) => {
       </div>
       
       {/* Custom Legend */}
-      <div className="mt-5 pt-4 border-t border-slate-800/50 grid grid-cols-2 gap-x-3 gap-y-2">
+      <div className="mt-5 pt-4 border-t border-slate-800/50 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
         {data.map((item, index) => {
           const percentage = ((item.totalAmount / total) * 100).toFixed(0);
           const bgColor = categoryBgColors[item.category] || categoryBgColors.Other;
