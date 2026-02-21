@@ -4,6 +4,7 @@ import ExpenseForm from '../components/ExpenseForm.jsx';
 import ExpenseList from '../components/ExpenseList.jsx';
 import SummaryCards from '../components/SummaryCards.jsx';
 import CategoryChart from '../components/CategoryChart.jsx';
+import DailyTrendChart from '../components/DailyTrendChart.jsx';
 import { useApiClient } from '../api/client.js';
 
 const getCurrentMonthParam = () => {
@@ -177,6 +178,23 @@ const DashboardPage = () => {
 
       {/* Summary Cards */}
       <SummaryCards totalAmount={summary.totalAmount || 0} monthLabel={monthLabel} />
+
+      {/* Daily Trend */}
+      <div className="glass-card-premium p-6 mb-8 relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent rounded-full -mr-20 -mt-20 group-hover:scale-150 transition-transform duration-700"></div>
+        <div className="relative z-10">
+          <h2 className="text-lg font-semibold mb-6 flex items-center gap-3">
+             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 flex items-center justify-center ring-1 ring-emerald-500/20">
+               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+             </div>
+             <div>
+               <span className="gradient-text">Daily Spending Trend</span>
+               <p className="text-[11px] text-slate-500 font-normal mt-0.5">Track your daily expenses over the month</p>
+             </div>
+          </h2>
+          <DailyTrendChart data={summary.dailyTrend} monthLabel={monthLabel} />
+        </div>
+      </div>
 
       {/* Form and Chart Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6 mb-8">

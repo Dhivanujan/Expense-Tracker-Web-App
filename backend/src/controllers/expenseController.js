@@ -159,6 +159,17 @@ export const getMonthlySummary = async (req, res) => {
       { $sort: { totalAmount: -1 } },
     ]);
 
+    const dailyTrend = await Expense.aggregate([
+      matchStage,
+      {
+        $group: {
+          _id: { $dayOfMonth: '$date' },
+          totalAmount: { $sum: '$amount' },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
     const totalAmount = totalResult[0]?.totalAmount || 0;
 
     return res.json({
@@ -166,6 +177,10 @@ export const getMonthlySummary = async (req, res) => {
       totalAmount,
       byCategory: byCategory.map((item) => ({
         category: item._id,
+        totalAmount: item.totalAmount,
+      })),
+      dailyTrend: dailyTrend.map((item) => ({
+        day: item._id,
         totalAmount: item.totalAmount,
       })),
     });
