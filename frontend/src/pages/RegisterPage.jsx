@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { createApiClient } from '../api/client.js';
+import { useApiClient } from '../api/client.js';
 import { useAuth } from '../state/AuthContext.jsx';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const api = useApiClient();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +24,6 @@ const RegisterPage = () => {
 
     setLoading(true);
     try {
-      const api = createApiClient();
       const res = await api.post('/auth/register', { name, email, password });
       const { token, ...userData } = res.data;
       login(userData, token);

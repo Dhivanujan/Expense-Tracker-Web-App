@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { createApiClient } from '../api/client.js';
+import { useApiClient } from '../api/client.js';
 import { useAuth } from '../state/AuthContext.jsx';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const api = useApiClient();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,12 +23,12 @@ const LoginPage = () => {
 
     setLoading(true);
     try {
-      const api = createApiClient();
       const res = await api.post('/auth/login', { email, password });
       const { token, ...userData } = res.data;
       login(userData, token);
       navigate('/');
     } catch (err) {
+      // Error is handled by interceptor or local if needed
       setError(err.response?.data?.message || 'Failed to login');
     } finally {
       setLoading(false);

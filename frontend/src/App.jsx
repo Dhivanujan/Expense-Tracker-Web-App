@@ -5,10 +5,11 @@ import RegisterPage from './pages/RegisterPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { useAuth } from './state/AuthContext.jsx';
+import { NotificationProvider } from './state/NotificationContext.jsx';
 
-const App = () => {
+const AppContent = () => {
   const { user } = useAuth();
-
+  
   return (
     <Routes>
       <Route
@@ -29,6 +30,14 @@ const App = () => {
       />
       <Route path="*" element={<Navigate to={user ? '/' : '/login'} replace />} />
     </Routes>
+  );
+};
+
+const App = () => {
+  return (
+    <NotificationProvider>
+      <AppContent />
+    </NotificationProvider>
   );
 };
 
