@@ -97,7 +97,7 @@ const DailyTrendChart = ({ data, monthLabel }) => {
       y: {
         beginAtZero: true,
         grid: {
-          color: 'rgba(0, 0, 0, 0.05)',
+          color: 'rgba(255, 255, 255, 0.06)',
         },
         ticks: {
             callback: function(value, index, values) {

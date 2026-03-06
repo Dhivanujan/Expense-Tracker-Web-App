@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext(null);
 
@@ -21,20 +21,20 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (userData, jwtToken) => {
+  const login = useCallback((userData, jwtToken) => {
     setUser(userData);
     setToken(jwtToken);
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({ user: userData, token: jwtToken })
     );
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null);
     setToken(null);
     localStorage.removeItem(STORAGE_KEY);
-  };
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>

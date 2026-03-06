@@ -38,9 +38,10 @@ export const getExpenses = asyncHandler(async (req, res) => {
 
   // Search by keyword (title or description)
   if (search) {
+    const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     query.$or = [
-      { title: { $regex: search, $options: 'i' } },
-      { description: { $regex: search, $options: 'i' } },
+      { title: { $regex: escapedSearch, $options: 'i' } },
+      { description: { $regex: escapedSearch, $options: 'i' } },
     ];
   }
 

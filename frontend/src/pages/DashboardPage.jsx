@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Layout from '../components/Layout.jsx';
 import ExpenseForm from '../components/ExpenseForm.jsx';
 import ExpenseList from '../components/ExpenseList.jsx';
@@ -47,7 +47,7 @@ const DashboardPage = () => {
     setPage(1);
   }, [categoryFilter, month]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -72,11 +72,11 @@ const DashboardPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [api, month, page, debouncedSearch, categoryFilter]);
 
   useEffect(() => {
     fetchData();
-  }, [month, page, debouncedSearch, categoryFilter]);
+  }, [fetchData]);
 
   const handleCreateOrUpdate = async (payload) => {
     setFormLoading(true);
