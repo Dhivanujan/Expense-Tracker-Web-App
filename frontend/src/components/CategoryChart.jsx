@@ -19,14 +19,14 @@ const categoryColors = {
   Other: '#64748b',
 };
 
-const categoryBgColors = {
-  Food: 'bg-orange-500/10',
-  Transport: 'bg-blue-500/10',
-  Shopping: 'bg-pink-500/10',
-  Bills: 'bg-yellow-500/10',
-  Health: 'bg-red-500/10',
-  Entertainment: 'bg-purple-500/10',
-  Other: 'bg-slate-500/10',
+const categoryHoverBgColors = {
+  Food: 'hover:bg-orange-500/10',
+  Transport: 'hover:bg-blue-500/10',
+  Shopping: 'hover:bg-pink-500/10',
+  Bills: 'hover:bg-yellow-500/10',
+  Health: 'hover:bg-red-500/10',
+  Entertainment: 'hover:bg-purple-500/10',
+  Other: 'hover:bg-slate-500/10',
 };
 
 const CategoryChart = ({ data }) => {
@@ -121,11 +121,11 @@ const CategoryChart = ({ data }) => {
       <div className="mt-5 pt-4 border-t border-slate-800/50 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
         {data.map((item, index) => {
           const percentage = ((item.totalAmount / total) * 100).toFixed(0);
-          const bgColor = categoryBgColors[item.category] || categoryBgColors.Other;
+          const hoverBgColor = categoryHoverBgColors[item.category] || categoryHoverBgColors.Other;
           return (
             <div 
               key={item.category} 
-              className={`flex items-center gap-2 text-xs group cursor-default py-1.5 px-2 rounded-lg hover:${bgColor} transition-all`}
+              className={`flex items-center gap-2 text-xs group cursor-default py-1.5 px-2 rounded-lg transition-all ${hoverBgColor}`}
             >
               <div 
                 className="w-3 h-3 rounded-full flex-shrink-0 transition-all group-hover:scale-110 ring-2 ring-slate-900" 

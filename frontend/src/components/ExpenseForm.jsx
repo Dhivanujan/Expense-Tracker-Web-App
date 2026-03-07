@@ -16,19 +16,30 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
       setCategory(initialData.category || 'Food');
       setDate(initialData.date?.slice(0, 10) || '');
       setDescription(initialData.description || '');
+      return;
     }
+
+    // Clear stale values when leaving edit mode.
+    setTitle('');
+    setAmount('');
+    setCategory('Food');
+    setDate('');
+    setDescription('');
   }, [initialData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title || !amount || !date) return;
+    const trimmedTitle = title.trim();
+    const parsedAmount = parseFloat(amount);
+
+    if (!trimmedTitle || !date || Number.isNaN(parsedAmount) || parsedAmount <= 0) return;
 
     onSubmit({
-      title,
-      amount: parseFloat(amount),
+      title: trimmedTitle,
+      amount: parsedAmount,
       category,
       date,
-      description,
+      description: description.trim(),
     });
 
     if (!initialData) {
