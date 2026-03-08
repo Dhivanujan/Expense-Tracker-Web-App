@@ -8,24 +8,32 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
   const [category, setCategory] = useState('Food');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
+  const [hydratedExpenseId, setHydratedExpenseId] = useState(null);
 
   useEffect(() => {
-    if (initialData) {
+    const expenseId = initialData?._id || null;
+
+    // Only hydrate when switching records to avoid clobbering in-progress edits.
+    if (expenseId && expenseId !== hydratedExpenseId) {
       setTitle(initialData.title || '');
       setAmount(initialData.amount?.toString() || '');
       setCategory(initialData.category || 'Food');
       setDate(initialData.date?.slice(0, 10) || '');
       setDescription(initialData.description || '');
+      setHydratedExpenseId(expenseId);
       return;
     }
 
-    // Clear stale values when leaving edit mode.
-    setTitle('');
-    setAmount('');
-    setCategory('Food');
-    setDate('');
-    setDescription('');
-  }, [initialData]);
+    if (!expenseId && hydratedExpenseId !== null) {
+      // Clear stale values only when leaving edit mode.
+      setTitle('');
+      setAmount('');
+      setCategory('Food');
+      setDate('');
+      setDescription('');
+      setHydratedExpenseId(null);
+    }
+  }, [initialData, hydratedExpenseId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,10 +70,13 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
             Title
           </label>
           <input
+            name="title"
             className="input-field"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Grocery shopping"
+            autoComplete="off"
+            required
           />
         </div>
         <div className="space-y-2">
@@ -78,13 +89,18 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
           <div className="relative group">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none font-medium">$</span>
             <input
+              name="amount"
               type="number"
               min="0"
               step="0.01"
               className="input-field pl-9"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
+              onWheel={(e) => e.currentTarget.blur()}
               placeholder="0.00"
+              autoComplete="off"
+              inputMode="decimal"
+              required
             />
           </div>
         </div>
@@ -95,17 +111,35 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
             </div>
             Category
           </label>
-          <select
-            className="input-field appearance-none cursor-pointer font-medium"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              name="category"
+              className="input-field appearance-none cursor-pointer font-medium pr-10"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {categories.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500"
+              aria-hidden="true"
+            >
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
@@ -117,10 +151,12 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
             Date
           </label>
           <input
+            name="date"
             type="date"
             className="input-field [color-scheme:dark] font-medium"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            required
           />
         </div>
         <div className="md:col-span-2 space-y-2">
@@ -130,11 +166,15 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
             </div>
             Description <span className="text-slate-600 font-normal normal-case">(optional)</span>
           </label>
-          <input
+          <textarea
+            name="description"
             className="input-field"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Add some details about this expense..."
+            rows={2}
+            maxLength={300}
+            autoComplete="off"
           />
         </div>
       </div>
