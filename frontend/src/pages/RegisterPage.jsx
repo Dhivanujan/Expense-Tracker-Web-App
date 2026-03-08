@@ -40,49 +40,32 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 py-8">
-      {/* Background decorations */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] animate-pulse"></div>
-        <div className="absolute bottom-1/3 left-1/4 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[120px]"></div>
-      </div>
-      
+    <div className="auth-shell">
       <div className="w-full max-w-md relative z-10 animate-fade-in-up">
-        {/* Logo */}
-        <div className="flex flex-col items-center justify-center mb-8">
-          <div className="relative">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-purple-500/20 flex items-center justify-center shadow-xl shadow-emerald-500/20 mb-4 ring-1 ring-emerald-500/30">
-              <span className="text-emerald-400 font-bold text-3xl">E</span>
-            </div>
-            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-white"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </div>
+        <div className="flex flex-col items-center justify-center mb-7">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-400/25 to-cyan-400/20 border border-teal-300/30 flex items-center justify-center mb-4">
+            <span className="font-display text-3xl font-bold text-teal-300">E</span>
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent text-center">ExpenseTracker</h1>
-          <p className="text-xs text-slate-500 mt-1 font-medium tracking-wider uppercase">Smart Finance Management</p>
+          <h1 className="font-display text-3xl font-bold gradient-text text-center">ExpenseTracker</h1>
+          <p className="text-xs text-slate-500 mt-1 font-semibold tracking-[0.16em] uppercase">Finance Control Center</p>
         </div>
 
-        {/* Card */}
-        <div className="glass-card-premium p-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-full -mr-10 -mt-10"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-emerald-500/10 to-transparent rounded-full -ml-8 -mb-8"></div>
-          
-          <div className="text-center mb-8 relative z-10">
-            <h2 className="text-2xl font-bold text-white mb-2">Create your account</h2>
-            <p className="text-sm text-slate-400">Start your journey to better financial health</p>
+        <div className="auth-card">
+          <div className="text-center mb-7">
+            <h2 className="font-display text-2xl font-bold text-slate-100 mb-2">Create your account</h2>
+            <p className="text-sm text-slate-400">Start tracking, analyzing, and improving your spending habits.</p>
           </div>
 
           {error && (
-            <div className="mb-6 flex items-center gap-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 animate-scale-in relative z-10">
+            <div className="mb-6 flex items-center gap-3 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 animate-scale-in">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-slate-300">Full name</label>
+              <label className="block text-sm font-semibold text-slate-300">Full Name</label>
               <div className="relative group">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <input
@@ -96,7 +79,7 @@ const RegisterPage = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-slate-300">Email address</label>
+              <label className="block text-sm font-semibold text-slate-300">Email Address</label>
               <div className="relative group">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 <input
@@ -149,18 +132,17 @@ const RegisterPage = () => {
             </button>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-slate-800/60 text-center relative z-10">
+          <div className="mt-8 pt-6 border-t border-slate-700/60 text-center">
             <p className="text-sm text-slate-400">
               Already have an account?{' '}
-              <Link to="/login" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors hover:underline underline-offset-4 decoration-emerald-400/30">
+              <Link to="/login" className="text-teal-300 hover:text-teal-200 font-semibold transition-colors hover:underline underline-offset-4 decoration-teal-300/40">
                 Sign in
               </Link>
             </p>
           </div>
         </div>
 
-        {/* Footer */}
-        <p className="text-center text-xs text-slate-500 mt-6 font-medium">
+        <p className="text-center text-xs text-slate-500 mt-6 font-medium tracking-wide">
           © 2026 ExpenseTracker. All rights reserved.
         </p>
       </div>

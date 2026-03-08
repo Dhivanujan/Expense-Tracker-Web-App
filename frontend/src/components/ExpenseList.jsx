@@ -1,13 +1,13 @@
 import React from 'react';
 
 const categoryColors = {
-  Food: { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/20', gradient: 'from-orange-500/20 to-orange-600/10', icon: '🍔' },
-  Transport: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', gradient: 'from-blue-500/20 to-blue-600/10', icon: '🚗' },
-  Shopping: { bg: 'bg-pink-500/10', text: 'text-pink-400', border: 'border-pink-500/20', gradient: 'from-pink-500/20 to-pink-600/10', icon: '🛍️' },
-  Bills: { bg: 'bg-yellow-500/10', text: 'text-yellow-400', border: 'border-yellow-500/20', gradient: 'from-yellow-500/20 to-yellow-600/10', icon: '📄' },
-  Health: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20', gradient: 'from-red-500/20 to-red-600/10', icon: '💊' },
-  Entertainment: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20', gradient: 'from-purple-500/20 to-purple-600/10', icon: '🎬' },
-  Other: { bg: 'bg-slate-500/10', text: 'text-slate-400', border: 'border-slate-500/20', gradient: 'from-slate-500/20 to-slate-600/10', icon: '📌' },
+  Food: { bg: 'bg-orange-500/10', text: 'text-orange-300', border: 'border-orange-500/30', gradient: 'from-orange-500/20 to-orange-500/5' },
+  Transport: { bg: 'bg-blue-500/10', text: 'text-blue-300', border: 'border-blue-500/30', gradient: 'from-blue-500/20 to-blue-500/5' },
+  Shopping: { bg: 'bg-pink-500/10', text: 'text-pink-300', border: 'border-pink-500/30', gradient: 'from-pink-500/20 to-pink-500/5' },
+  Bills: { bg: 'bg-amber-500/10', text: 'text-amber-300', border: 'border-amber-500/30', gradient: 'from-amber-500/20 to-amber-500/5' },
+  Health: { bg: 'bg-red-500/10', text: 'text-red-300', border: 'border-red-500/30', gradient: 'from-red-500/20 to-red-500/5' },
+  Entertainment: { bg: 'bg-violet-500/10', text: 'text-violet-300', border: 'border-violet-500/30', gradient: 'from-violet-500/20 to-violet-500/5' },
+  Other: { bg: 'bg-slate-500/10', text: 'text-slate-300', border: 'border-slate-500/30', gradient: 'from-slate-500/20 to-slate-500/5' },
 };
 
 const ExpenseList = ({ expenses, onEdit, onDelete }) => {
@@ -65,7 +65,7 @@ const ExpenseList = ({ expenses, onEdit, onDelete }) => {
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
                         <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${colors.gradient} flex items-center justify-center text-lg ring-1 ${colors.border} group-hover:scale-105 transition-transform`}>
-                          {colors.icon}
+                          <span className={`text-xs font-bold ${colors.text}`}>{exp.category.slice(0, 2).toUpperCase()}</span>
                         </div>
                         <div>
                           <div className="font-medium text-slate-100 group-hover:text-white transition-colors">{exp.title}</div>
@@ -122,7 +122,7 @@ const ExpenseList = ({ expenses, onEdit, onDelete }) => {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${colors.gradient} flex items-center justify-center text-2xl ring-1 ${colors.border}`}>
-                    {colors.icon}
+                    <span className={`text-sm font-bold ${colors.text}`}>{exp.category.slice(0, 2).toUpperCase()}</span>
                   </div>
                   <div>
                     <div className="font-semibold text-slate-100">{exp.title}</div>
