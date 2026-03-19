@@ -7,6 +7,9 @@ import CategoryChart from '../components/CategoryChart.jsx';
 import DailyTrendChart from '../components/DailyTrendChart.jsx';
 import { useApiClient } from '../api/client.js';
 
+const PAGE_SIZE = 5;
+const CATEGORIES = ['Food', 'Transport', 'Shopping', 'Bills', 'Health', 'Entertainment', 'Other'];
+
 const getCurrentMonthParam = () => {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -29,7 +32,9 @@ const DashboardPage = () => {
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   const [debouncedSearch, setDebouncedSearch] = useState(search);
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   const monthLabel = useMemo(() => month, [month]);
 
@@ -54,7 +59,7 @@ const DashboardPage = () => {
       const expensesParams = {
         month,
         page,
-        limit: 5, // Smaller limit to demonstrate pagination
+        limit: PAGE_SIZE,
         search: debouncedSearch,
         category: categoryFilter,
       };
@@ -64,8 +69,9 @@ const DashboardPage = () => {
         api.get('/expenses/summary', { params: { month } }),
       ]);
 
-      setExpenses(expensesRes.data.expenses);
-      setTotalPages(expensesRes.data.pages);
+      setExpenses(expensesRes.data.expenses || []);
+      setTotalPages(Math.max(expensesRes.data.pages || 1, 1));
+      setTotalItems(expensesRes.data.total || 0);
       setSummary(summaryRes.data);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load data');
@@ -78,6 +84,12 @@ const DashboardPage = () => {
     fetchData();
   }, [fetchData]);
 
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
   const handleCreateOrUpdate = async (payload) => {
     setFormLoading(true);
     setError(null);
@@ -85,10 +97,15 @@ const DashboardPage = () => {
       if (selectedExpense) {
         await api.put(`/expenses/${selectedExpense._id}`, payload);
         setSelectedExpense(null);
+        await fetchData();
       } else {
         await api.post('/expenses', payload);
+        if (page !== 1) {
+          setPage(1);
+        } else {
+          await fetchData();
+        }
       }
-      await fetchData();
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to save expense');
     } finally {
@@ -101,13 +118,18 @@ const DashboardPage = () => {
     setError(null);
     try {
       await api.delete(`/expenses/${id}`);
-      await fetchData();
+      if (expenses.length === 1 && page > 1) {
+        setPage((prev) => prev - 1);
+      } else {
+        await fetchData();
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to delete expense');
     }
   };
 
   const handleDownloadPdf = async () => {
+    setPdfLoading(true);
     try {
       const res = await api.get('/reports/monthly', {
         params: { month },
@@ -123,8 +145,20 @@ const DashboardPage = () => {
       window.URL.revokeObjectURL(url);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to download PDF');
+    } finally {
+      setPdfLoading(false);
     }
   };
+
+  const handleResetFilters = () => {
+    setSearch('');
+    setCategoryFilter('All');
+    setPage(1);
+  };
+
+  const isFiltered = Boolean(search.trim()) || categoryFilter !== 'All';
+  const startItem = totalItems === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+  const endItem = Math.min(page * PAGE_SIZE, totalItems);
 
   return (
     <Layout>
@@ -155,10 +189,18 @@ const DashboardPage = () => {
           <div className="w-px h-8 bg-slate-700/50"></div>
           <button
             onClick={handleDownloadPdf}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 hover:from-emerald-500/20 hover:to-cyan-500/20 text-emerald-400 text-xs font-semibold transition-all border border-emerald-500/20 hover:border-emerald-500/40 group active:scale-[0.98]"
+            disabled={pdfLoading}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 hover:from-emerald-500/20 hover:to-cyan-500/20 text-emerald-400 text-xs font-semibold transition-all border border-emerald-500/20 hover:border-emerald-500/40 group active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-y-0.5 transition-transform"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            <span className="hidden sm:inline">Export PDF</span>
+            {pdfLoading ? (
+              <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-y-0.5 transition-transform"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            )}
+            <span className="hidden sm:inline">{pdfLoading ? 'Exporting...' : 'Export PDF'}</span>
           </button>
         </div>
       </div>
@@ -213,6 +255,7 @@ const DashboardPage = () => {
           </h2>
           <ExpenseForm
             onSubmit={handleCreateOrUpdate}
+            onCancel={() => setSelectedExpense(null)}
             initialData={selectedExpense}
             loading={formLoading}
           />
@@ -279,10 +322,19 @@ const DashboardPage = () => {
               className="input-field cursor-pointer font-medium"
             >
               <option value="All">All Categories</option>
-              {['Food', 'Transport', 'Shopping', 'Bills', 'Health', 'Entertainment', 'Other'].map(c => (
+              {CATEGORIES.map(c => (
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
+            {isFiltered && (
+              <button
+                type="button"
+                onClick={handleResetFilters}
+                className="btn-secondary px-4 py-3 text-xs"
+              >
+                Clear filters
+              </button>
+            )}
           </div>
         </div>
         
@@ -297,6 +349,9 @@ const DashboardPage = () => {
           <div className="text-slate-400 flex items-center gap-2 bg-slate-800/40 px-4 py-2 rounded-xl">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-500"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
             Page <span className="font-bold text-white mx-1">{page}</span> of <span className="font-bold text-white ml-1">{totalPages || 1}</span>
+          </div>
+          <div className="text-slate-400 text-xs sm:text-sm bg-slate-800/40 px-4 py-2 rounded-xl border border-slate-700/50">
+            Showing {startItem}-{endItem} of {totalItems}
           </div>
           <div className="flex items-center gap-2">
             <button

@@ -2,13 +2,19 @@ import React, { useEffect, useState } from 'react';
 
 const categories = ['Food', 'Transport', 'Shopping', 'Bills', 'Health', 'Entertainment', 'Other'];
 
-const ExpenseForm = ({ onSubmit, initialData, loading }) => {
+const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('Food');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
   const [hydratedExpenseId, setHydratedExpenseId] = useState(null);
+
+  const today = new Date().toISOString().slice(0, 10);
+  const parsedAmount = Number.parseFloat(amount);
+  const isAmountValid = Number.isFinite(parsedAmount) && parsedAmount > 0;
+  const isDateValid = Boolean(date) && date <= today;
+  const isFormValid = title.trim().length > 0 && isAmountValid && isDateValid;
 
   useEffect(() => {
     const expenseId = initialData?._id || null;
@@ -38,9 +44,9 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const trimmedTitle = title.trim();
-    const parsedAmount = parseFloat(amount);
+    const parsedAmount = Number.parseFloat(amount);
 
-    if (!trimmedTitle || !date || Number.isNaN(parsedAmount) || parsedAmount <= 0) return;
+    if (!trimmedTitle || !isDateValid || Number.isNaN(parsedAmount) || parsedAmount <= 0) return;
 
     onSubmit({
       title: trimmedTitle,
@@ -156,6 +162,7 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
             className="input-field [color-scheme:dark] font-medium"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            max={today}
             required
           />
         </div>
@@ -181,7 +188,7 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
       <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || !isFormValid}
           className="btn-primary flex items-center justify-center gap-2.5 disabled:opacity-60 disabled:cursor-not-allowed min-w-[160px] py-3"
         >
           {loading ? (
@@ -209,12 +216,24 @@ const ExpenseForm = ({ onSubmit, initialData, loading }) => {
           )}
         </button>
         {initialData && (
+          <button
+            type="button"
+            onClick={onCancel}
+            className="btn-secondary min-w-[130px] py-3"
+          >
+            Cancel Edit
+          </button>
+        )}
+        {initialData && (
           <span className="text-xs text-slate-500 flex items-center gap-2 bg-slate-800/50 px-3 py-1.5 rounded-lg">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-500"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
             Editing expense
           </span>
         )}
       </div>
+      {!isDateValid && date && (
+        <p className="text-xs text-amber-300">Date cannot be in the future.</p>
+      )}
     </form>
   );
 };
