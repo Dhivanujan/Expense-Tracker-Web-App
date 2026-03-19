@@ -1,137 +1,176 @@
 # Expense Tracker Web App
 
-A complete, secure, and modern full-stack application for tracking daily expenses. Users can register, log in, manage expenses, view insightful charts, and download monthly PDF reports.
+A secure, responsive full-stack expense tracker built with React, Node.js, Express, and MongoDB.
+Users can authenticate, manage expenses, analyze spending trends, and export monthly PDF reports.
 
-## 🚀 Features
+## Highlights
 
-- **Authentication**: Secure User Registration & Login with JWT and Password Hashing.
-- **Expense Management**: Add, Edit, Delete, and View expenses.
-- **Advanced Filtering**: Search expenses by title/description and filter by category.
-- **Pagination**: Efficiently browse through large lists of expenses.
-- **Visual Analytics**: Interactive Category-wise Pie Chart and Monthly Summary Cards.
-- **Reports**: Download detailed Monthly Expense Reports as PDFs.
-- **Responsive UI**: Modern Glassmorphism design using Tailwind CSS, fully responsive.
-- **Security**: Protected with Helmet (secure headers) and Rate Limiting to prevent abuse.
+- Secure authentication with JWT and hashed passwords.
+- Full expense CRUD (create, read, update, delete).
+- Search by title/description and filter by category.
+- Paginated transaction history with clear range indicators.
+- Monthly insights with summary cards, category doughnut chart, and daily trend chart.
+- PDF export for monthly reports.
+- Improved UX flows:
+  - Edit mode with cancel action.
+  - Prevent future dates for expenses.
+  - Validation-aware submit button states.
+  - Better loading feedback and notifications.
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
-- **React.js** (Vite)
-- **Tailwind CSS** (Styling)
-- **Chart.js + react-chartjs-2** (Data Visualization)
-- **Axios** (API Communication)
-- **React Router DOM** (Navigation)
+
+- React 18 + Vite
+- Tailwind CSS
+- Chart.js + react-chartjs-2
+- Axios
+- React Router DOM
 
 ### Backend
-- **Node.js** & **Express.js**
-- **MongoDB** & **Mongoose** (Database)
-- **JWT (JsonWebToken)** (Authentication)
-- **Bcryptjs** (Password Encryption)
-- **PDFKit** (Report Generation)
-- **Helmet & Express-Rate-Limit** (Security)
 
-## 📂 Project Structure
+- Node.js + Express
+- MongoDB + Mongoose
+- jsonwebtoken
+- bcryptjs
+- PDFKit
+- helmet + express-rate-limit
+- express-validator
 
-```
+## Project Structure
+
+```text
 Expense Tracker Web App/
-├── backend/                # Node.js + Express API
+├── backend/
 │   ├── src/
-│   │   ├── controllers/    # Request handlers
-│   │   ├── middleware/     # Auth & Error handling
-│   │   ├── models/         # Mongoose Schemas (User, Expense)
-│   │   ├── routes/         # API Routes
-│   │   ├── utils/          # Helpers (PDF Generator)
-│   │   └── server.js       # App entry point
-│   ├── .env.example        # Environment variables template
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── utils/
+│   │   └── server.js
 │   └── package.json
-│
-├── frontend/               # React + Tailwind Client
+├── frontend/
 │   ├── src/
-│   │   ├── api/            # Axios client setup
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Application pages
-│   │   ├── state/          # Auth Context (Global State)
-│   │   └── main.jsx        # React entry point
-│   ├── .env.example        # Frontend config
-│   ├── tailwind.config.cjs # Tailwind configuration
-│   └── vite.config.mjs     # Vite configuration
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── state/
+│   │   └── main.jsx
+│   └── package.json
 └── README.md
 ```
 
-## ⚙️ Installation & Setup
+## Prerequisites
 
-### Prerequisites
-- Node.js (v14+ recommended)
-- MongoDB (Local installation or Atlas URI)
+- Node.js 18+
+- npm 9+
+- MongoDB local instance or MongoDB Atlas URI
 
-### 1. Backend Setup
+## Environment Variables
 
-1. Navigate to the backend folder:
-   ```bash
-   cd backend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Configure Environment Variables:
-   - Create a `.env` file based on `.env.example`.
-   - Update `MONGO_URI` with your MongoDB connection string.
-   - Set a secure `JWT_SECRET`.
-   ```env
-   PORT=5000
-   MONGO_URI=mongodb://localhost:27017/expense-tracker
-   JWT_SECRET=your_super_secret_key
-   NODE_ENV=development
-   ```
-4. Start the server:
-   ```bash
-   npm run dev
-   ```
-   Server runs at `http://localhost:5000`.
+### Backend (.env in backend)
 
-### 2. Frontend Setup
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/expense-tracker
+JWT_SECRET=replace_with_a_strong_secret
+NODE_ENV=development
+```
 
-1. Open a new terminal and navigate to the frontend folder:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Configure Environment Variables:
-   - Create a `.env` file based on `.env.example`.
-   ```env
-   VITE_API_BASE_URL=http://localhost:5000
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-   Access the app at `http://localhost:5173`.
+### Frontend (.env in frontend)
 
-## 📡 API Endpoints
+```env
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+## Local Development
+
+1. Install backend dependencies:
+
+```bash
+cd backend
+npm install
+```
+
+2. Start backend:
+
+```bash
+npm run dev
+```
+
+3. In a new terminal, install frontend dependencies:
+
+```bash
+cd frontend
+npm install
+```
+
+4. Start frontend:
+
+```bash
+npm run dev
+```
+
+5. Open the app:
+
+- Frontend: http://localhost:5173
+- Backend API base: http://localhost:5000/api
+
+## Build for Production
+
+### Frontend
+
+```bash
+cd frontend
+npm run build
+npm run preview
+```
+
+### Backend
+
+```bash
+cd backend
+npm start
+```
+
+## API Overview
 
 ### Auth
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Login user and get JWT
+
+- POST /api/auth/register
+- POST /api/auth/login
 
 ### Expenses
-- `GET /api/expenses` - Get expenses (supports `month`, `page`, `limit`, `search`, `category`)
-- `POST /api/expenses` - Create new expense
-- `PUT /api/expenses/:id` - Update expense
-- `DELETE /api/expenses/:id` - Delete expense
-- `GET /api/expenses/summary` - Get monthly totals & category breakdown
+
+- GET /api/expenses
+  - Query params: month, page, limit, search, category
+- POST /api/expenses
+- PUT /api/expenses/:id
+- DELETE /api/expenses/:id
+- GET /api/expenses/summary
+  - Query params: month (required, format YYYY-MM)
 
 ### Reports
-- `GET /api/reports/monthly` - Download monthly PDF report
 
-## 🎨 Future Improvements
-- [ ] Add dark/light mode toggle (currently Dark Mode only)
-- [ ] Implement email verification
-- [ ] Add budget limits per category
-- [ ] Support multiple currencies
+- GET /api/reports/monthly
+  - Query params: month (format YYYY-MM)
+  - Returns PDF blob
 
----
-*Built with ❤️ for learning and financial awareness.*
+## Current UX Notes
+
+- Dashboard defaults to the current month.
+- Search input is debounced for smoother API calls.
+- PDF export includes loading and disabled states.
+- Notifications auto-dismiss and can be manually dismissed.
+
+## Future Improvements
+
+- Add recurring expenses.
+- Add budget goals and overspend alerts.
+- Add multi-currency support.
+- Add automated tests (unit and integration).
+
+## License
+
+This project is for educational and personal portfolio use.
