@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 const categories = ['Food', 'Transport', 'Shopping', 'Bills', 'Health', 'Entertainment', 'Other'];
+const quickTitlesByCategory = {
+  Food: ['Mess fee', 'Canteen meal', 'Snacks'],
+  Transport: ['Bus pass', 'Auto fare', 'Cab share'],
+  Shopping: ['Stationery', 'Toiletries', 'Laundry items'],
+  Bills: ['Mobile recharge', 'Wi-Fi split', 'Electricity share'],
+  Health: ['Medicine', 'Clinic visit', 'First-aid items'],
+  Entertainment: ['Movie night', 'Cafe hangout', 'Streaming subscription'],
+  Other: ['Misc expense', 'Emergency spend', 'Room essentials'],
+};
 
 const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
   const [title, setTitle] = useState('');
@@ -15,6 +24,7 @@ const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
   const isAmountValid = Number.isFinite(parsedAmount) && parsedAmount > 0;
   const isDateValid = Boolean(date) && date <= today;
   const isFormValid = title.trim().length > 0 && isAmountValid && isDateValid;
+  const quickTitles = quickTitlesByCategory[category] || quickTitlesByCategory.Other;
 
   useEffect(() => {
     const expenseId = initialData?._id || null;
@@ -80,10 +90,16 @@ const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
             className="input-field"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="e.g. Grocery shopping"
+            placeholder="e.g. Mess dinner, bus pass"
             autoComplete="off"
+            list="quick-expense-titles"
             required
           />
+          <datalist id="quick-expense-titles">
+            {quickTitles.map((item) => (
+              <option key={item} value={item} />
+            ))}
+          </datalist>
         </div>
         <div className="space-y-2">
           <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
@@ -93,7 +109,7 @@ const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
             Amount
           </label>
           <div className="relative group">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none font-medium">$</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none font-medium">₹</span>
             <input
               name="amount"
               type="number"
@@ -115,7 +131,7 @@ const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
             <div className="w-5 h-5 rounded-md bg-emerald-500/10 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
             </div>
-            Category
+            Category (Quick Select)
           </label>
           <div className="relative">
             <select
@@ -145,6 +161,22 @@ const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
             >
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {categories.map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setCategory(item)}
+                className={`px-2.5 py-1.5 rounded-lg text-[11px] font-semibold border transition-colors ${
+                  category === item
+                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40'
+                    : 'bg-slate-800/45 text-slate-400 border-slate-700/60 hover:text-slate-200'
+                }`}
+              >
+                {item}
+              </button>
+            ))}
           </div>
         </div>
       </div>

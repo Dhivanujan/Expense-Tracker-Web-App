@@ -8,14 +8,14 @@ const Layout = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 border-b border-slate-700/50 bg-slate-950/75 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 min-h-16 py-2 flex items-center justify-between gap-2">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-teal-400/25 to-cyan-400/20 border border-teal-300/25 flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-teal-400/25 to-cyan-400/20 border border-teal-300/25 flex items-center justify-center">
               <span className="font-display text-xl font-bold text-teal-300">E</span>
             </div>
-            <div>
-              <p className="font-display text-lg font-bold gradient-text leading-tight">ExpenseTracker</p>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Finance Control Center</p>
+            <div className="min-w-0">
+              <p className="font-display text-base sm:text-lg font-bold gradient-text leading-tight truncate">Hostel Expense Planner</p>
+              <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500 hidden sm:block">Student Monthly Budgeting</p>
             </div>
           </Link>
 
@@ -52,7 +52,7 @@ const Layout = ({ children }) => {
           <span>© 2026 ExpenseTracker. All rights reserved.</span>
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-700/60 px-3 py-1 bg-slate-900/60 text-slate-400">
             <span className="w-2 h-2 rounded-full bg-teal-400"></span>
-            Platform healthy
+            Planner online
           </span>
         </div>
       </footer>

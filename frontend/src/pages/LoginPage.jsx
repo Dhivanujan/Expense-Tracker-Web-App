@@ -42,14 +42,14 @@ const LoginPage = () => {
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-400/25 to-cyan-400/20 border border-teal-300/30 flex items-center justify-center mb-4">
             <span className="font-display text-3xl font-bold text-teal-300">E</span>
           </div>
-          <h1 className="font-display text-3xl font-bold gradient-text text-center">ExpenseTracker</h1>
-          <p className="text-xs text-slate-500 mt-1 font-semibold tracking-[0.16em] uppercase">Finance Control Center</p>
+          <h1 className="font-display text-3xl font-bold gradient-text text-center">Hostel Expense Planner</h1>
+          <p className="text-xs text-slate-500 mt-1 font-semibold tracking-[0.16em] uppercase">Smart Student Budgeting</p>
         </div>
 
         <div className="auth-card">
           <div className="text-center mb-7">
             <h2 className="font-display text-2xl font-bold text-slate-100 mb-2">Welcome back</h2>
-            <p className="text-sm text-slate-400">Sign in to continue managing your monthly expenses.</p>
+            <p className="text-sm text-slate-400">Sign in to manage hostel spending and plan your month better.</p>
           </div>
 
           {error && (

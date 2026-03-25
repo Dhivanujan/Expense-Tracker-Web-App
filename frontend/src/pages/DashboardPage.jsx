@@ -169,28 +169,28 @@ const DashboardPage = () => {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/10 flex items-center justify-center ring-1 ring-emerald-500/20">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold gradient-text">Dashboard</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold gradient-text">Hostel Budget Dashboard</h1>
           </div>
-          <p className="text-sm text-slate-400 flex items-center gap-2 ml-[52px]">
+          <p className="text-sm text-slate-400 flex items-center gap-2 sm:ml-[52px]">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            Track your monthly spending and explore categories
+            Track hostel spending, plan ahead, and avoid end-of-month cash crunch.
           </p>
         </div>
-        <div className="flex items-center gap-3 glass-card p-2.5 self-stretch sm:self-auto animate-slide-in-right">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/60 border border-slate-700/40">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 glass-card p-2.5 self-stretch sm:self-auto animate-slide-in-right w-full sm:w-auto">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/60 border border-slate-700/40 w-full sm:w-auto">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             <input
               type="month"
               value={month}
               onChange={(e) => setMonth(e.target.value)}
-              className="bg-transparent border-none text-sm text-slate-200 font-medium focus:ring-0 cursor-pointer [color-scheme:dark]"
+              className="bg-transparent border-none text-sm text-slate-200 font-medium focus:ring-0 cursor-pointer [color-scheme:dark] w-full"
             />
           </div>
-          <div className="w-px h-8 bg-slate-700/50"></div>
+          <div className="hidden sm:block w-px h-8 bg-slate-700/50"></div>
           <button
             onClick={handleDownloadPdf}
             disabled={pdfLoading}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 hover:from-emerald-500/20 hover:to-cyan-500/20 text-emerald-400 text-xs font-semibold transition-all border border-emerald-500/20 hover:border-emerald-500/40 group active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 hover:from-emerald-500/20 hover:to-cyan-500/20 text-emerald-400 text-xs font-semibold transition-all border border-emerald-500/20 hover:border-emerald-500/40 group active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed w-full sm:w-auto"
           >
             {pdfLoading ? (
               <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -200,7 +200,7 @@ const DashboardPage = () => {
             ) : (
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-y-0.5 transition-transform"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             )}
-            <span className="hidden sm:inline">{pdfLoading ? 'Exporting...' : 'Export PDF'}</span>
+            <span>{pdfLoading ? 'Exporting...' : 'Export PDF'}</span>
           </button>
         </div>
       </div>
@@ -231,7 +231,7 @@ const DashboardPage = () => {
              </div>
              <div>
                <span className="gradient-text">Daily Spending Trend</span>
-               <p className="text-[11px] text-slate-500 font-normal mt-0.5">Track your daily expenses over the month</p>
+               <p className="text-[11px] text-slate-500 font-normal mt-0.5">See daily spend pattern and adjust early</p>
              </div>
           </h2>
           <DailyTrendChart data={summary.dailyTrend} monthLabel={monthLabel} />
@@ -250,7 +250,7 @@ const DashboardPage = () => {
             </div>
             <div>
               <span className="gradient-text">{selectedExpense ? 'Edit Expense' : 'New Expense'}</span>
-              <p className="text-[11px] text-slate-500 font-normal mt-0.5">{selectedExpense ? 'Update your expense details' : 'Add a new transaction'}</p>
+              <p className="text-[11px] text-slate-500 font-normal mt-0.5">{selectedExpense ? 'Update your expense details' : 'Quickly add a hostel expense'}</p>
             </div>
           </h2>
           <ExpenseForm
@@ -291,7 +291,7 @@ const DashboardPage = () => {
               </div>
               <div>
                 <span className="gradient-text">Transactions</span>
-                <p className="text-[11px] text-slate-500 font-normal mt-0.5">Your recent expenses</p>
+                <p className="text-[11px] text-slate-500 font-normal mt-0.5">Recent hostel transactions</p>
               </div>
             </h2>
             {loading && (
@@ -305,7 +305,7 @@ const DashboardPage = () => {
             )}
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
             <div className="relative group">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input
@@ -313,13 +313,13 @@ const DashboardPage = () => {
                 placeholder="Search expenses..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="input-field-icon w-full sm:w-auto min-w-[200px]"
+                className="input-field-icon w-full sm:w-auto min-w-0 sm:min-w-[220px]"
               />
             </div>
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="input-field cursor-pointer font-medium"
+              className="input-field cursor-pointer font-medium w-full sm:w-auto"
             >
               <option value="All">All Categories</option>
               {CATEGORIES.map(c => (
@@ -330,7 +330,7 @@ const DashboardPage = () => {
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="btn-secondary px-4 py-3 text-xs"
+                className="btn-secondary px-4 py-3 text-xs w-full sm:w-auto"
               >
                 Clear filters
               </button>
@@ -345,7 +345,7 @@ const DashboardPage = () => {
         />
 
         {/* Pagination Controls */}
-        <div className="mt-6 pt-5 border-t border-slate-800/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm relative z-10">
+        <div className="mt-6 pt-5 border-t border-slate-800/50 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 text-sm relative z-10">
           <div className="text-slate-400 flex items-center gap-2 bg-slate-800/40 px-4 py-2 rounded-xl">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-500"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
             Page <span className="font-bold text-white mx-1">{page}</span> of <span className="font-bold text-white ml-1">{totalPages || 1}</span>
@@ -353,11 +353,11 @@ const DashboardPage = () => {
           <div className="text-slate-400 text-xs sm:text-sm bg-slate-800/40 px-4 py-2 rounded-xl border border-slate-700/50">
             Showing {startItem}-{endItem} of {totalItems}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="btn-secondary px-5 py-2.5 flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="btn-secondary px-5 py-2.5 flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed flex-1 sm:flex-none"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
               Previous
@@ -365,7 +365,7 @@ const DashboardPage = () => {
             <button
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
-              className="btn-secondary px-5 py-2.5 flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="btn-secondary px-5 py-2.5 flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed flex-1 sm:flex-none"
             >
               Next
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
