@@ -71,7 +71,7 @@ const RegisterPage = () => {
                 <input
                   type="text"
                   placeholder="John Doe"
-                  className="input-field-icon"
+                  className="input-field-icon text-ellipsis"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -85,7 +85,7 @@ const RegisterPage = () => {
                 <input
                   type="email"
                   placeholder="you@example.com"
-                  className="input-field-icon"
+                  className="input-field-icon text-ellipsis"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -99,7 +99,7 @@ const RegisterPage = () => {
                 <input
                   type="password"
                   placeholder="••••••••"
-                  className="input-field-icon"
+                  className="input-field-icon text-ellipsis"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />

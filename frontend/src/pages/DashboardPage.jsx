@@ -306,26 +306,43 @@ const DashboardPage = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-            <div className="relative group">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <div className="relative group w-full sm:w-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input
                 type="text"
                 placeholder="Search expenses..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="input-field-icon w-full sm:w-auto min-w-0 sm:min-w-[220px]"
+                className="input-field pl-11 pr-4 w-full sm:w-auto min-w-0 sm:min-w-[220px] text-ellipsis"
               />
             </div>
-            <select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="input-field cursor-pointer font-medium w-full sm:w-auto"
-            >
-              <option value="All">All Categories</option>
-              {CATEGORIES.map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
+            <div className="relative w-full sm:w-auto">
+              <select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className="input-field appearance-none cursor-pointer font-medium w-full sm:min-w-[160px] pl-4 pr-10 text-ellipsis"
+              >
+                <option value="All">All Categories</option>
+                {CATEGORIES.map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
             {isFiltered && (
               <button
                 type="button"

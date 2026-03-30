@@ -87,7 +87,7 @@ const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
           </label>
           <input
             name="title"
-            className="input-field"
+            className="input-field pr-8 text-ellipsis"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Mess dinner, bus pass"
@@ -115,7 +115,7 @@ const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
               type="number"
               min="0"
               step="0.01"
-              className="input-field pl-9"
+              className="input-field pl-10 text-ellipsis"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               onWheel={(e) => e.currentTarget.blur()}
@@ -136,7 +136,7 @@ const ExpenseForm = ({ onSubmit, onCancel, initialData, loading }) => {
           <div className="relative">
             <select
               name="category"
-              className="input-field appearance-none cursor-pointer font-medium pr-10"
+              className="input-field appearance-none cursor-pointer font-medium pr-10 text-ellipsis"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >

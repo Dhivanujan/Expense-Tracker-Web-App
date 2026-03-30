@@ -67,7 +67,7 @@ const LoginPage = () => {
                 <input
                   type="email"
                   placeholder="you@example.com"
-                  className="input-field-icon"
+                  className="input-field-icon text-ellipsis"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -81,7 +81,7 @@ const LoginPage = () => {
                 <input
                   type="password"
                   placeholder="••••••••"
-                  className="input-field-icon"
+                  className="input-field-icon text-ellipsis"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
